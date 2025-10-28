@@ -7,7 +7,6 @@ import Newsletter from "../components/Newsletter";
 import { mobile } from "../responsive";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { publicRequest } from "../requestMethods";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../redux/cartRedux";

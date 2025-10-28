@@ -9,6 +9,8 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { publicRequest } from "../requestMethods";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../redux/cartRedux";
 
 const Container = styled.div``;
 
@@ -128,6 +130,7 @@ const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState(null);
   const [size, setSize] = useState(null);
+  const dispatch = useDispatch();
 
   function handleQuantity(type) {
     if (type === "dec") {
@@ -149,9 +152,20 @@ const Product = () => {
     getProduct();
   }, [id]);
 
-  function handleClick() {
-    //update cart
-  }
+  const handleClick = () => {
+    if (!color) {
+      alert("Please select a color");
+      return;
+    }
+    if (!size) {
+      alert("Please select a size");
+      return;
+    }
+    // Dispatch with product details including color and size
+    dispatch(
+      addProduct({ ...product, quantity, color, size })
+    );
+  };
 
   return (
     <Container>
@@ -175,6 +189,7 @@ const Product = () => {
             <Filter>
               <FilterTitle>Size</FilterTitle>
               <FilterSize onChange={(e) => setSize(e.target.value)}>
+                <FilterSizeOption>Select Size</FilterSizeOption>
                 {product.size?.map((s) => (
                   <FilterSizeOption key={s}>{s}</FilterSizeOption>
                 ))}
@@ -193,7 +208,7 @@ const Product = () => {
                 onClick={() => handleQuantity("inc")}
               />
             </AmountContainer>
-            <Button onClick={handleClick()}>ADD TO CART</Button>
+            <Button onClick={handleClick}>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>

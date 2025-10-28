@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router";
 import { userRequest } from "../requestMethods";
+import { useSelector } from "react-redux";
 
 const Success = () => {
   const location = useLocation();
+  const currentUser = useSelector((state) => state.user.currentUser);
   const data = location.state.stripeData;
   const cart = location.state.cart;
   const [orderId, setOrderId] = useState(null);
-  console.log("Cart:", cart);
-  console.log("Data:", data);
 
   useEffect(() => {
     const createOrder = async () => {
       try {
         const res = await userRequest.post("/orders", {
-          userId: "66d6ab5afc20ddc3ff5169fe",
+          userId: currentUser._id,
           products: cart.products.map((item) => ({
             productId: item._id,
             quantity: item._quantity,

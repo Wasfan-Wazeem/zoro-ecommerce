@@ -25,7 +25,9 @@ yarn-error.log*
 # Environment files
 zoro-ecommerce-frontend/.env
 zoro-ecommerce-backend/.env
+admin/.env
 
 # Node modules in subprojects
 zoro-ecommerce-frontend/node_modules
 zoro-ecommerce-backend/node_modules
+admin/node_modules
